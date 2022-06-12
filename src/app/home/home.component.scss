@@ -11,3 +11,21 @@ q {
 .radius {
   border-radius: 10px;
 }
+
+input {
+  &.ng-touched.ng-invalid {
+    border-bottom: solid 5px red !important;
+  }
+}
+
+select {
+  &.ng-touched.ng-invalid {
+    border-bottom: solid 5px red !important;
+  }
+}
+
+textarea {
+  &.ng-touched.ng-invalid {
+    border-bottom: solid 5px red !important;
+  }
+}

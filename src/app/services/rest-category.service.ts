@@ -10,4 +10,8 @@ export class RestCategoryService {
   public get(url: string) {
     return this.http.get(url);
   }
+
+  public postCategory(url: string, body: any) {
+    return this.http.post(url, body);
+  }
 }

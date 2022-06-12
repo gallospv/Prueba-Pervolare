@@ -3,9 +3,13 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { Shell } from '@app/shell/shell.service';
 
 const routes: Routes = [
-  Shell.childRoutes([{ path: 'about', loadChildren: () => import('./about/about.module').then((m) => m.AboutModule) }]),
-  // Fallback when no prior route is matched
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  Shell.childRoutes([
+    {
+      path: 'list',
+      data: { page: 'list' },
+      loadChildren: () => import('./pages/list/list.module').then((m) => m.ListModule),
+    },
+  ]),
 ];
 
 @NgModule({

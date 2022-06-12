@@ -15,6 +15,7 @@ import { QuoteService } from './quote.service';
 export class HomeComponent implements OnInit {
   quote: string | undefined;
   isLoading = false;
+  public quoter: number = 0;
   public categoryData: any = [];
   public category_form: FormGroup;
   public loading: boolean = !1;
@@ -48,6 +49,7 @@ export class HomeComponent implements OnInit {
     this.loadData();
   }
 
+  // GET
   public loadData() {
     this.restcategory.get('http://127.0.0.1:8000/api/categorias/').subscribe((resp) => {
       this.categoryData = resp;
@@ -56,6 +58,15 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  public loadDataId(id: string) {
+    this.restcategory.get('http://127.0.0.1:8000/api/categorias/' + id).subscribe((resp) => {
+      this.categoryData = resp;
+      this.category_form.reset();
+      console.log(resp);
+    });
+  }
+
+  // POST
   public sendCategory() {
     this.restcategory
       .postCategory('http://127.0.0.1:8000/api/categorias/', {
@@ -72,7 +83,45 @@ export class HomeComponent implements OnInit {
           showConfirmButton: false,
           timer: 3000,
         });
-        console.log('datos insertdos');
+        this.loadData();
+      });
+  }
+
+  // DELETE
+  public deleteCategory(id: string) {
+    this.restcategory.deleteCategory('http://127.0.0.1:8000/api/categorias/' + id).subscribe((resp) => {
+      swal.fire({
+        icon: 'success',
+        title: 'Registro Exitoso',
+        text: 'Se elimino correctamente la categoría',
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      this.loadData();
+    });
+  }
+
+  // UPDATE
+  public updateCategory(id: string) {
+    this.quoter = 1;
+    this.loadDataId(id);
+
+    console.log(id);
+    this.restcategory
+      .updateCategory('http://127.0.0.1:8000/api/categorias/' + id, {
+        code: this.category_form.value.code,
+        title: this.category_form.value.title,
+        description: this.category_form.value.description,
+        idparentcategory: this.category_form.value.idparentcategory,
+      })
+      .subscribe((respuesta) => {
+        swal.fire({
+          icon: 'success',
+          title: 'Registro Actualizado',
+          text: 'Se añadio correctamente la categoría',
+          showConfirmButton: false,
+          timer: 3000,
+        });
         this.loadData();
       });
   }

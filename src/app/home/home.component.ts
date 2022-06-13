@@ -20,12 +20,7 @@ export class HomeComponent implements OnInit {
   public category_form: FormGroup;
   public loading: boolean = !1;
 
-  constructor(
-    private quoteService: QuoteService,
-    private restcategory: RestCategoryService,
-    private formBuilder: FormBuilder,
-    private router: Router
-  ) {
+  constructor(private quoteService: QuoteService, private restcategory: RestCategoryService) {
     this.category_form = new FormGroup({
       code: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]),
       title: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]),
